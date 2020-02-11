@@ -4,9 +4,11 @@ import { Button, Input, Icon, registerCustomIconType } from 'react-native-elemen
 import { TextInput } from 'react-native-gesture-handler';
 import {validateEmail} from '../../utils/validation';
 import * as fireBase from 'firebase';
+import Loading from '../loading';
+import {withNavigation} from 'react-navigation';
 
 const RegisterForm = (prop:any) => {
-    const{toastRef}=prop;
+    const{toastRef,navigation}=prop;
 
     const[hidePassword,setHidePassword] = useState(true);
     const[hideRepeatPassword,setHideRepeatPassword] = useState(true);
@@ -15,7 +17,10 @@ const RegisterForm = (prop:any) => {
     const[password, setPassword]=useState("");
     const[repeatPassword, setRepeatPassword]=useState("");
 
+    const[isVisibleLoading, setIsVisibleLoading]=useState(false);
+
     const register =async ()=>{
+        setIsVisibleLoading(true);
         // console.log('Usuario registrado');
         // console.log('Email: ',email);
         // console.log('Password: ',password);
@@ -40,8 +45,10 @@ const RegisterForm = (prop:any) => {
                     await fireBase
                     .auth().createUserWithEmailAndPassword(email,password)
                     .then(()=>{
-                        console.log('usuario creado correctamente');
+                        
+                        //console.log('usuario creado correctamente');
                         toastRef.current.show('usuario creado correctamente');
+                        navigation.navigate("MyAccount");
                     })
                     .catch(()=>{
                         //console.log('Error al crear la cuenta, intentalo más tarde');
@@ -50,6 +57,7 @@ const RegisterForm = (prop:any) => {
                 }
             }
         }
+        setIsVisibleLoading(false);
     }
 
     return (
@@ -108,7 +116,7 @@ const RegisterForm = (prop:any) => {
                 buttonStyle = {styles.btnRegister}
                 onPress = {()=>register()}
             />
-
+            <Loading text="Creando cuenta" isVisible={isVisibleLoading}/>
         </View>
     );
 
@@ -138,4 +146,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RegisterForm;
+export default withNavigation(RegisterForm);
