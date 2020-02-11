@@ -5,7 +5,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import {validateEmail} from '../../utils/validation';
 import * as fireBase from 'firebase';
 
-const RegisterForm = () => {
+const RegisterForm = (prop:any) => {
+    const{toastRef}=prop;
 
     const[hidePassword,setHidePassword] = useState(true);
     const[hideRepeatPassword,setHideRepeatPassword] = useState(true);
@@ -15,30 +16,36 @@ const RegisterForm = () => {
     const[repeatPassword, setRepeatPassword]=useState("");
 
     const register =async ()=>{
-        console.log('Usuario registrado');
-        console.log('Email: ',email);
-        console.log('Password: ',password);
-        console.log('Repeat password: ',repeatPassword);
+        // console.log('Usuario registrado');
+        // console.log('Email: ',email);
+        // console.log('Password: ',password);
+        // console.log('Repeat password: ',repeatPassword);
 
-        const resultValidationEmail = validateEmail(email);
-        console.log('Result Validation:', resultValidationEmail);
+        // const resultValidationEmail = validateEmail(email);
+        // console.log('Result Validation:', resultValidationEmail);
         if(!email || !password || !repeatPassword){
-            console.log('Todos los campos son obligatorios');
+            //console.log('Todos los campos son obligatorios');
+            toastRef.current.show('Todos los campos son obligatorios');
+            
         }else{
             if(!validateEmail(email)){
-                console.log('Email Incorrecto');
+                //console.log('Email Incorrecto');
+                toastRef.current.show('Email Incorrecto');
             }else{
                 if(password !== repeatPassword ){
-                    console.log('Las contraseñas no son iguales');
+                    //console.log('Las contraseñas no son iguales');
+                    toastRef.current.show('Las contraseñas no son iguales');
                 }else{
                     //console.log('Registro correcto...');
                     await fireBase
                     .auth().createUserWithEmailAndPassword(email,password)
                     .then(()=>{
                         console.log('usuario creado correctamente');
+                        toastRef.current.show('usuario creado correctamente');
                     })
                     .catch(()=>{
-                        console.log('Error al crear la cuenta, intentalo más tarde');
+                        //console.log('Error al crear la cuenta, intentalo más tarde');
+                        toastRef.current.show('Error al crear la cuenta, intentalo más tarde');
                     });
                 }
             }
