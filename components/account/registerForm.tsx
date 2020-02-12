@@ -47,7 +47,7 @@ const RegisterForm = (prop:any) => {
                     .then(()=>{
                         
                         //console.log('usuario creado correctamente');
-                        toastRef.current.show('usuario creado correctamente');
+                        //toastRef.current.show('usuario creado correctamente');
                         navigation.navigate("MyAccount");
                     })
                     .catch(()=>{

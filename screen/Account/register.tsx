@@ -3,7 +3,7 @@ import {StyleSheet, View, ScrollView, Text, Image} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {Button} from 'react-native-elements';
 import RegisterForm from '../../components/account/registerForm';
-import Toast from 'react-native-easy-toast'
+import Toast from 'react-native-easy-toast';
 
 const Register = () => {
     const toastRef = useRef();
