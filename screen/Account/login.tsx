@@ -4,6 +4,7 @@ import { Divider } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 import LoginForm from '../../components/account/loginForm';
 import Toast from 'react-native-easy-toast';
+import LoginFacebook from '../../components/account/loginFacebook';
 
 const Login = (prop:any) => {
 
@@ -22,7 +23,8 @@ const Login = (prop:any) => {
             </View>
             <Divider style={styles.divider} />
             <View style={styles.viewContainer}>
-                <Text>Facebook</Text>
+                {/* <Text>Facebook</Text> */}
+                <LoginFacebook/>
             </View>
             <Toast 
                 ref={toastRef}
@@ -61,7 +63,8 @@ const styles = StyleSheet.create({
     },
     divider: {
         backgroundColor: "#00a680",
-        margin: 40,
+        marginHorizontal :40,
+        marginVertical: 20,
     },
     //separar
     register:{
@@ -71,8 +74,7 @@ const styles = StyleSheet.create({
     btnRegister:{
         color:"#00a680",
         fontWeight:"bold",
-
-    }
+    },
 });
 
 export default Login;

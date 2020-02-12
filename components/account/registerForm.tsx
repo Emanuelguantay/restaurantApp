@@ -95,7 +95,7 @@ const RegisterForm = (prop:any) => {
             />
 
             <Input
-                placeholder="Repetir Contrasñea"
+                placeholder="Repetir Contraseña"
                 containerStyle={styles.inputForm}
                 secureTextEntry={hideRepeatPassword}
                 //onChange={e => setRepeatPassword(e.nativeEvent.text) }

@@ -9,7 +9,7 @@ import {withNavigation} from 'react-navigation';
 const LoginRegister = (prop:any) =>{
 
     const{toastRef,navigation}=prop;
-    // UseState
+    // Hook estados
     const[hidePassword,setHidePassword] = useState(true);
     const[email, setEmail]= useState("");
     const[password, setPassword]=useState("");
@@ -37,11 +37,10 @@ const LoginRegister = (prop:any) =>{
                     await fireBase
                     .auth().signInWithEmailAndPassword(email,password)
                     .then(()=>{
-                        console.log('Login correcto');
                         navigation.navigate("MyAccount");
                     })
                     .catch(()=>{
-                        toastRef.current.show('Email o contraseña incorrectas');
+                        toastRef.current.show('Email o contraseña incorrecta');
                     });
                 }
             }
