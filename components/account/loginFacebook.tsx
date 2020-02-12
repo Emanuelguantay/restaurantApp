@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { StyleSheet, View, ScrollView, Text, Image } from 'react-native';
 import { SocialIcon } from 'react-native-elements'
 
+//TO DO: Hacer logica con facebook
 const Login = () =>{
     console.log('Iniciando sesión con Facebook');
 }
