@@ -1,12 +1,10 @@
-import React, { useRef } from 'react';
-import { StyleSheet, View, ScrollView, Text, Image } from 'react-native';
+import React from 'react';
+import { StyleSheet, View,  Text } from 'react-native';
 import { Avatar } from 'react-native-elements';
 import * as fireBase from 'firebase';
 import * as Permisions from 'react-native-permissions';
 import ImagePicker from 'react-native-image-picker';
 import { check, PERMISSIONS, RESULTS } from 'react-native-permissions';
-
-
 
 //Documentación
 //check(PERMISSIONS.ANDROID.CAMERA)
@@ -51,7 +49,7 @@ const InfoUser = (prop: any) => {
 
     //function para subir image a firebase
     const uploadImage = async (uri: any, nameImage: string) => {
-        setTextLoading('Actualizando avatar');
+        setTextLoading('Actualizando imagen');
         setIsLoading(true);
         const response = await fetch(uri);
         const blob = await response.blob();

@@ -1,0 +1,101 @@
+import React, { useState } from 'react';
+import { StyleSheet, View, Text } from 'react-native';
+import { ListItem } from 'react-native-elements';
+import Modal from '../../components/modal';
+import ChangeDisplayNameForm from './changeDisplayNameForm';
+import ChangeEmailForm from './changeEmailForm';
+import ChangePasswordForm from './changePasswordForm';
+
+const AccountOptions = () => {
+    const [isVisibleModal, setIsVisibleModal] = useState(true);
+    const [renderComponent, setRenderComponent] = useState();
+    const menuOptions = [
+        {
+            title: 'Cambiar Nombre:',
+            iconType: "material-community",
+            iconNameLeft: "account-circle",
+            iconColorLeft: "#ccc",
+            iconNameRight: "chevron-right",
+            iconColorRight: "#ccc",
+            onPress: ()=> selectedComponent("displayName"),
+        },
+        {
+            title: 'Cambiar Email:',
+            iconType: "material-community",
+            iconNameLeft: "at",
+            iconColorLeft: "#ccc",
+            iconNameRight: "chevron-right",
+            iconColorRight: "#ccc",
+            onPress: ()=> selectedComponent("email")
+        },
+        {
+            title: 'Cambiar Contraseña:',
+            iconType: "material-community",
+            iconNameLeft: "lock-reset",
+            iconColorLeft: "#ccc",
+            iconNameRight: "chevron-right",
+            iconColorRight: "#ccc",
+            onPress: ()=> selectedComponent("password")
+        },
+    ]
+
+    const selectedComponent = (key: string) => {
+        switch (key) {
+            case "displayName":
+                setRenderComponent(ChangeDisplayNameForm);
+                setIsVisibleModal(true);
+                break;
+            case "email":
+                setRenderComponent(ChangeEmailForm);
+                setIsVisibleModal(true);
+                break;
+            case "password":
+                setRenderComponent(ChangePasswordForm);
+                setIsVisibleModal(true);
+                break;
+            default:
+                break;
+        }
+    }
+
+    return (
+        <View>
+            {
+                menuOptions.map((menu,index)=>(
+                    <ListItem
+                        key={index}
+                        title={menu.title}
+                        leftIcon = {{
+                            type: menu.iconType,
+                            name: menu.iconNameLeft,
+                            color: menu.iconColorLeft,
+                        }}
+                        rightIcon = {{
+                            type: menu.iconType,
+                            name: menu.iconNameRight,
+                            color: menu.iconColorRight,
+                        }}
+                        onPress = {menu.onPress}
+                        containerStyle = {styles.menuItem}
+                    />
+                ))
+            }
+            {renderComponent && (
+                <Modal isVisible={isVisibleModal} setIsVisible={setIsVisibleModal}>
+                    {renderComponent}
+                </Modal>
+                )
+            }
+            
+        </View>
+    );
+}
+
+const styles= StyleSheet.create({
+    menuItem:{
+        borderBottomWidth: 1,
+        borderBottomColor:'#e3e3e3',
+    }
+});
+
+export default AccountOptions;
