@@ -38,6 +38,9 @@ const UserLogged = () => {
                         setTextLoading={setTextLoading}
                     />
                     <AccountOptions
+                        userInfo={userInfo}
+                        setReloadData={setReloadData}
+                        toastRef = {toastRef}
                     />
                 </View>
             }
