@@ -1,28 +1,55 @@
-import React, {useState, useEffect} from 'react';
-import {View, Text} from 'react-native';
-import {Button} from 'react-native-elements';
+import React, { useState, useEffect, useRef } from 'react';
+import { View, Text } from 'react-native';
+import { Button } from 'react-native-elements';
 import * as firebase from 'firebase';
 import InfoUser from '../../components/account/infoUser';
+import Toast from 'react-native-easy-toast';
+import Loading from '../../components/loading';
 
-const UserLogged = ()=>{
-    const[userInfo,setUserInfo] = useState();
 
-    useEffect(()=>{
-        (async ()=>{
+const UserLogged = () => {
+    const [userInfo, setUserInfo] = useState();
+    const [reloadData, setReloadData] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [textLoading, setTextLoading] = useState('');
+
+    const toastRef = useRef();
+
+    useEffect(() => {
+        (async () => {
             //usuario logueado recientemente
             const user = await firebase.auth().currentUser;
-            setUserInfo(user? user.providerData[0]:' ');
-
-            //console.log('usser:', user.providerData[0]);
+            setUserInfo(user?.providerData[0]);
+            // console.log('usser usuario logeado:', user? user: '');
+            // console.log('usser providerData:', user? user.providerData[0] : '');
         })();
-    }, []) //[cuando cambien se ejecuta useEffect]
+        setReloadData(false);
+    }, [reloadData]) //[cuando cambien se ejecuta useEffect]
 
-    return(
+    return (
         <View>
-            {userInfo && <InfoUser userInfo={userInfo}/>}
+            {userInfo &&
+                <InfoUser 
+                    userInfo={userInfo} 
+                    setReloadData={setReloadData} 
+                    toastRef={toastRef}
+                    setIsLoading={setIsLoading}
+                    setTextLoading={setTextLoading}
+                />
+            }
             <Button
                 title="Cerrar Sesión"
-                onPress={()=>{firebase.auth().signOut()}}
+                onPress={() => { firebase.auth().signOut() }}
+            />
+
+            <Toast
+                ref={toastRef}
+                position='center'
+                opacity={0.5}
+            />
+            <Loading
+                text={textLoading}
+                isVisible={isLoading}
             />
         </View>
     );
