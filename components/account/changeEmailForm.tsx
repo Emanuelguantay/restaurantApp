@@ -14,31 +14,34 @@ const ChangeEmailForm = (prop:any)=>{
     const[isLoading, setIsLoading] = useState(false);
     const[hidePassword, setHidePassword] = useState(true);
 
-    const updateEmail = ()=>{
+    const updateEmail = () => {
         setError({});
-        if(!newEmail || email === newEmail){
-            setError({email : "Email no puede ser igual o ser vacio"})
-        } else{
-            setIsLoading(true);
-            reauthenticate(password)?.then(()=>{
-                fireBase.auth().currentUser?.updateEmail((newEmail)).then(()=>{
-                    setIsLoading(false);
-                    setReloadData(true);
-                    toastRef.current.show("Email actualizado correctamente");
-                    setIsVisibleModal(false);
-                }).catch(()=>{
-                    setError({email: "Error al actualizar email"});
+        if (!newEmail) {
+            setError({ email: "Email no puede ser vacio" });
+        } else {
+            if (email === newEmail) {
+                setError({ email: "Email no puede ser igual" });
+            } else {
+                setIsLoading(true);
+                reauthenticate(password)?.then(() => {
+                    fireBase.auth().currentUser?.updateEmail((newEmail)).then(() => {
+                        setIsLoading(false);
+                        setReloadData(true);
+                        toastRef.current.show("Email actualizado correctamente");
+                        setIsVisibleModal(false);
+                    }).catch(() => {
+                        setError({ email: "Error al actualizar email" });
+                        setIsLoading(false);
+                    })
+
+                }).catch(() => {
+                    setError({ password: "La contraseña no es correcta" });
                     setIsLoading(false);
                 })
-
-            }).catch(()=>{
-                setError({password: "La contraseña no es correcta"});
-                setIsLoading(false);
-            })
+            }
+            console.log('Email update')
         }
-        console.log('Email update')
     }
-
     return(
         <View style={styles.view}>
             
