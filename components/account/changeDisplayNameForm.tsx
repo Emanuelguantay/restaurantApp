@@ -5,7 +5,7 @@ import * as fireBase from 'firebase';
 
 const ChangeDisplayNameForm = (prop:any)=>{
 
-    //propr
+    //prop
     const {displayName, setIsVisibleModal, setReloadData, toastRef} = prop;
     const[newDisplayName, setNewDisplayName] = useState();
     const[error,setError] = useState();
@@ -15,7 +15,8 @@ const ChangeDisplayNameForm = (prop:any)=>{
         console.log('Nombre de usuario actualizado');
         setError(null);
         if(!newDisplayName){
-            setError('El nombre de usuario no ha cambiado');
+            console.log(newDisplayName);
+            setError('El nombre de usuario no se ha modificado');
         }else{
             setIsLoading(true);
             const update ={
@@ -69,13 +70,16 @@ const styles = StyleSheet.create({
     view:{
         alignItems:'center',
         paddingVertical:10,
+       
     },
     input:{
         marginBottom: 10,
+        //padding: 40,
     },
     btnContainer : {
         marginTop: 20,
-        width: '100%',
+        width: '95%',
+        
     },
     btn : {
         backgroundColor : "#00a680",

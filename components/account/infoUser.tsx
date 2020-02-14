@@ -43,7 +43,7 @@ const InfoUser = (prop: any) => {
     } = prop;
     // console.log('photoURL', photoURL);
     // console.log('userInfo', prop.userInfo);
-    // console.log('UID', uid);
+    console.log('UID', uid);
     // const {userInfo} =prop;
     // console.log('USER INFO:',userInfo);
 
@@ -110,7 +110,9 @@ const InfoUser = (prop: any) => {
                     const source = { uri: response.uri };
                     uploadImage(source.uri, uid).then(() => {
                         updatePhotoUrl(uid);
-                    });
+                    })
+                    //TO DO : mModificar catch
+                    .catch();
                 }
             });
         }

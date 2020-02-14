@@ -8,12 +8,16 @@ import UserGuest from './userGuest';
 
 const MyAccount = () =>{
     const [login,setLogin] = useState(false);
+    
+    console.log('current user: ',fireBase.auth().currentUser);
 
     useEffect(()=>{
         
         fireBase.auth().onAuthStateChanged(user =>{
             !user ? setLogin(false):setLogin(true);
             console.log('login',login);
+            //TOKEN
+            //console.log('current user em login: ',fireBase.auth().currentUser);
         })
     });
     //Probar
